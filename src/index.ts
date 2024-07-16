@@ -38,6 +38,7 @@ async function run() {
         )
         if (res.result && res.result.token) {
           core.info(`Exchanged GitHub Actions OIDC token for temporary Depot token`)
+          core.setSecret(res.result.token)
           core.exportVariable('DEPOT_TOKEN', res.result.token)
           tokenFound = true
         }
