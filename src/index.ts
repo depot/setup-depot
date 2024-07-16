@@ -39,6 +39,7 @@ async function run() {
         if (res.result && res.result.token) {
           core.info(`Exchanged GitHub Actions OIDC token for temporary Depot token`)
           core.exportVariable('DEPOT_TOKEN', res.result.token)
+          core.setSecret(res.result.token)
           tokenFound = true
         }
       } catch (err) {
@@ -57,6 +58,7 @@ async function run() {
             const oidcToken = await publicOIDC.getIDToken('https://depot.dev')
             core.info(`Using open-source pull request OIDC token for Depot authentication`)
             core.exportVariable('DEPOT_TOKEN', oidcToken)
+            core.setSecret(oidcToken)
           } catch (err) {
             core.info(`Unable to exchange open-source pull request OIDC token for temporary Depot token: ${err}`)
           }
